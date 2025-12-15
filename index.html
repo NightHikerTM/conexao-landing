@@ -215,8 +215,11 @@
         <!-- Item 3: Form -->
         <div class="form-card">
             <label for="email" class="form-label">Quer ser avisado quando abrirmos a agenda para pilotos?</label>
-            <!-- Form Version: v4 (Trigger Git Deploy) -->
-            <form name="contact-v4" method="POST" action="obrigado.html" netlify>
+            <!-- Form Version: v5 (Honeypot Added) -->
+            <form name="contact-v4" method="POST" action="obrigado.html" netlify-honeypot="bot-field" netlify>
+                <div style="display: none;">
+                    <label>Don't fill this out if you're human: <input name="bot-field" /></label>
+                </div>
                 <div class="form-group">
                     <input type="email" name="email" id="email" placeholder="Insira seu e-mail" required>
                     <button type="submit">Avise-me</button>
