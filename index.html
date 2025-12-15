@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conexão³ | Em Breve</title>
+    <meta name="description" content="Laboratório de P&D para soft skills. Inteligência Relacional em Movimento.">
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:wght@400&family=Montserrat:wght@700;800&display=swap"
+        rel="stylesheet">
+
+    <style>
+        /* 1. Global Reset & Variables */
+        :root {
+            --bg-color: #F7F5F0;
+            --text-color: #333333;
+            --brand-color: #266D76;
+            --cta-color: #D9725B;
+            --cta-hover: #c46650;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Lato', sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            line-height: 1.6;
+            min-height: 100vh;
+            overflow-x: hidden;
+            position: relative;
+        }
+
+        /* 2. Background Pattern */
+        body::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image:
+                radial-gradient(circle, var(--brand-color) 1px, transparent 1px),
+                linear-gradient(to right, rgba(38, 109, 118, 0.05) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(38, 109, 118, 0.05) 1px, transparent 1px);
+            background-size: 40px 40px, 80px 80px, 80px 80px;
+            opacity: 0.15;
+            z-index: -1;
+            pointer-events: none;
+        }
+
+        /* 3. Main Layout Container 
+           Using Flexbox gap for precise spacing control between items.
+        */
+        .layout-container {
+            width: 90%;
+            max-width: 1200px;
+            margin: 0 auto;
+
+            min-height: 100vh;
+            /* Full viewport height */
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            /* Center vertically */
+            align-items: center;
+
+            /* Spacing between Logo, Text, and Form */
+            gap: 1rem;
+
+            padding-bottom: 2rem;
+            /* Spacing for footer overlap prevention */
+        }
+
+        /* 4. Component Styles */
+
+        /* Logo */
+        .logo-img {
+            display: block;
+            width: 100%;
+            max-width: 500px;
+            height: auto;
+            /* No margins, spacing handled by container gap */
+        }
+
+        /* Lead Text */
+        .lead-text {
+            font-size: 1.25rem;
+            color: #555;
+            text-align: center;
+            max-width: 600px;
+            width: 100%;
+            /* No margins, spacing handled by container gap */
+        }
+
+        /* Form Container */
+        .form-card {
+            width: 100%;
+            max-width: 480px;
+            background: #fff;
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 10px 30px rgba(38, 109, 118, 0.08);
+            border: 1px solid rgba(38, 109, 118, 0.1);
+
+            /* Add a bit more space above the form specifically if needed, 
+               or just rely on the gap. Let's rely on gap but maybe add a margin-top 
+               if user wants form separated more. User wanted "tighter", so gap is good. */
+            margin-top: 0.5rem;
+        }
+
+        .form-label {
+            display: block;
+            margin-bottom: 1rem;
+            font-weight: 500;
+            color: var(--brand-color);
+            text-align: center;
+        }
+
+        .form-group {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        input[type="email"] {
+            width: 100%;
+            padding: 1rem 1.5rem;
+            font-family: 'Lato', sans-serif;
+            font-size: 1rem;
+            color: var(--text-color);
+            background: #fff;
+            border: 1px solid var(--brand-color);
+            border-radius: 50px;
+            outline: none;
+            transition: box-shadow 0.3s ease;
+        }
+
+        input[type="email"]:focus {
+            box-shadow: 0 0 0 3px rgba(38, 109, 118, 0.2);
+        }
+
+        button[type="submit"] {
+            width: 100%;
+            padding: 1rem 2rem;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 1rem;
+            color: #fff;
+            background-color: var(--cta-color);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(217, 114, 91, 0.3);
+        }
+
+        button[type="submit"]:hover {
+            background-color: var(--cta-hover);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(217, 114, 91, 0.4);
+        }
+
+        /* Footer - Pushed to bottom */
+        footer {
+            width: 100%;
+            text-align: center;
+            padding: 2rem;
+            font-size: 0.875rem;
+            color: #888;
+            margin-top: auto;
+            /* Push to bottom of flex body if body was flex, but here we just append it */
+            position: absolute;
+            bottom: 0;
+            left: 0;
+        }
+
+        /* Responsive */
+        @media (min-width: 768px) {
+            .form-group {
+                flex-direction: row;
+            }
+
+            button[type="submit"] {
+                width: auto;
+                min-width: 140px;
+            }
+
+            .lead-text {
+                font-size: 1.35rem;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="layout-container">
+        <!-- Item 1: Logo -->
+        <img src="logo.png" alt="Conexão³ Logo" class="logo-img">
+
+        <!-- Item 2: Lead Text -->
+        <p class="lead-text">Em breve neste espaço apresentaremos um novo laboratório de P&D para soft skills. Aguarde!
+        </p>
+
+        <!-- Item 3: Form -->
+        <div class="form-card">
+            <label for="email" class="form-label">Quer ser avisado quando abrirmos a agenda para pilotos?</label>
+            <!-- Form Version: v3 (Netlify Attribute) -->
+            <form name="contact-v3" method="POST" action="/obrigado.html" netlify>
+                <div class="form-group">
+                    <input type="email" name="email" id="email" placeholder="Insira seu e-mail" required>
+                    <button type="submit">Avise-me</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+
+    <footer>
+        <p>&copy; 2025 Conexão³. Todos os direitos reservados.</p>
+        <p><a href="mailto:contato@conexaoaocubo.com.br">contato@conexaoaocubo.com.br</a></p>
+    </footer>
+
+</body>
+
+</html>
