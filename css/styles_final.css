@@ -176,15 +176,35 @@ footer {
     container-name: scroller-root;
 }
 
+/*
+   Full-Width Wrapper
+   Handles the background color extension to browser edges.
+*/
+.section-wrapper {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    /* Move background colors here */
+}
+
+/* Alternating Background Colors on Wrapper */
+.section-wrapper.odd {
+    background-color: var(--bg-color);
+}
+
+.section-wrapper.even {
+    background-color: var(--brand-color);
+}
+
+
 .scroll-section {
-    /* 
-       Sizing Logic:
-       1. Base: Fill available width (100% or 100vw).
-       2. Constraint A: Max Width 2400px.
-       3. Constraint B: Fit inside viewport height (100vh) while keeping 4:3 AR.
-          - 4:3 AR means Max Width = 100vh * (4/3) = 133.33vh
-       
-       So we take the minimum of these three values.
+    /*
+       Sizing Logic (Constrained Content):
+       1. Max Width 2400px.
+       2. Fit inside viewport height (100vh) while keeping 4:3 AR.
+       So we take the minimum of these.
+       100% width here refers to the wrapper, but effectively we want it constrained.
     */
     width: min(100%, 2400px, calc(100vh * 4 / 3));
 
@@ -195,12 +215,7 @@ footer {
     /* The core aspect ratio logic */
     aspect-ratio: 4 / 3;
 
-    /* Hard Floor Constraint: Stops getting smaller than 600px height */
-    /* min-height: 600px; */
-    /* min-width: 800px; */
-    /* Force 4:3 ratio floor (600 * 4/3) to prevent SVG gapping */
-
-    /* Background properties for SVGs */
+    /* Background properties for SVGs (Spine) */
     background-size: 100% 100%;
     background-position: center;
     background-repeat: no-repeat;
@@ -212,17 +227,8 @@ footer {
     justify-content: center;
     align-items: center;
 
-    /* Centering */
+    /* Centering handled by flex parent wrapper, but keeping margin auto is safe */
     margin: 0 auto;
-}
-
-/* Alternating Background Colors */
-.scroll-section.odd {
-    background-color: var(--bg-color);
-}
-
-.scroll-section.even {
-    background-color: var(--brand-color);
 }
 
 /* =========================================
