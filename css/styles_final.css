@@ -148,8 +148,13 @@ button[type="submit"]:hover {
 footer {
     width: 100%;
     text-align: center;
-    padding: 2rem;
-    font-size: 0.875rem;
+    padding: 1.5rem;
+
+    /* Fluid scaling matching menu/content */
+    /* Increased by ~30% from 0.008 to 0.011 as requested */
+    font-size: calc(min(100cqw, 2400px, 133.33vh) * 0.011);
+    /* ~1.1% of container width */
+
     color: #888;
     background-color: var(--bg-color);
     /* Ensure readibility if overlaid */
@@ -165,6 +170,10 @@ footer {
     display: flex;
     flex-direction: column;
     align-items: center;
+
+    /* Enable Parent Container Queries for Global Sync */
+    container-type: inline-size;
+    container-name: scroller-root;
 }
 
 .scroll-section {
@@ -178,6 +187,10 @@ footer {
        So we take the minimum of these three values.
     */
     width: min(100%, 2400px, calc(100vh * 4 / 3));
+
+    /* Enable Container Queries */
+    container-type: inline-size;
+    container-name: scroll-section;
 
     /* The core aspect ratio logic */
     aspect-ratio: 4 / 3;
@@ -247,3 +260,196 @@ footer {
         font-size: 1.35rem;
     }
 }
+
+/* =========================================
+   TOP MENU STYLES
+   ========================================= */
+.top-menu {
+    /* 
+       Reverted to fixed to restore the original vertical positioning interaction
+       (Overlaying/Not pushing content down). 
+       Keeping cqw units ensures scaling sync works even with fixed positioning 
+       as closest container is used for unit resolution.
+    */
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    z-index: 1000;
+    /* Background gradient to ensure visibility if needed, or transparent as per mockup? 
+       Mockup has a strong teal bar at the top. */
+    background-color: var(--brand-color);
+    padding: 1rem 0;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+.menu-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1.5rem;
+    flex-wrap: wrap;
+    max-width: 1400px;
+    margin: 0 auto;
+    width: 90%;
+}
+
+.menu-item {
+    text-decoration: none;
+    color: #ffffff;
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+
+    /* 
+       Synchronized Scaling:
+       "Layout Unit" = min(100cqw, 2400px, 133.33vh)
+       Using 100cqw (Container Query Width) from .scroller-container
+       ensures it matches the exact width of content, eliminating scrollbar lag mismatch.
+    */
+    font-size: calc(min(100cqw, 2400px, 133.33vh) * 0.009);
+    /* ~0.9% of actual content width */
+
+    /* Fallback/Clamp for extreme cases if needed, but strict sync requested */
+    /* min-height logic might be needed for very small screens, but prioritized layout match */
+
+    text-transform: uppercase;
+    transition: opacity 0.3s;
+    letter-spacing: 0.5px;
+}
+
+.menu-item:hover {
+    opacity: 0.8;
+}
+
+.menu-item.active {
+    color: var(--cta-color);
+    /* Highlight color for active/current section if we implemented scroll spy, or just for "Home" default */
+}
+
+.menu-item .ref {
+    display: none;
+    /* Hide the (1), (2) numbering in visual output unless desired. Mockup didn't explicitly show them, but specs mentioned them. Let's hide for cleanliness unless requested. */
+}
+
+
+/* =========================================
+   HERO SECTION STYLES (Orbit Layout)
+   ========================================= */
+
+/* Center container relative to the section */
+.hero-content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    /* Ensure it fills the 4:3 section */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Montserrat', sans-serif;
+    color: var(--text-color);
+}
+
+/* 
+   Fluid Typography for Hero 
+   Using Container Query Units (cqw) for perfect scaling relative to the container.
+   The container has a 4:3 aspect ratio, so we can base everything on width.
+   100cqw = width of the section.
+*/
+
+.hero-content {
+    /* 
+       Base font size: 
+       Reduced from 1.4cqw to 0.9cqw based on user feedback (too big).
+    */
+    font-size: 0.9cqw;
+}
+
+/* Common Text Styles */
+.orbit-text {
+    position: absolute;
+    width: 25%;
+    /* Approx width for text blocks */
+    z-index: 10;
+}
+
+.orbit-text h2 {
+    font-size: 2.5em;
+    /* relative to base (cqw) */
+    font-weight: 800;
+    line-height: 1.1;
+    text-transform: uppercase;
+    margin-bottom: 0.2em;
+    color: #333;
+    white-space: nowrap;
+    /* Prevent wrapping changes if possible, or handle strictly */
+}
+
+.orbit-text p {
+    font-size: 1.2em;
+    font-weight: 600;
+    line-height: 1.3;
+    text-transform: uppercase;
+    color: #333;
+}
+
+.highlight {
+    color: var(--cta-color);
+    /* Terracotta color */
+}
+
+/* Positioning - Adjusted to orbit the center circle */
+/* Assuming the center circle (bg image) takes up roughly the middle 40-50% */
+
+/* Top Left */
+.orbit-text.top-left {
+    top: 20%;
+    left: 8%;
+    text-align: left;
+}
+
+/* Bottom Left */
+.orbit-text.bottom-left {
+    bottom: 20%;
+    left: 8%;
+    text-align: left;
+}
+
+/* Top Right */
+.orbit-text.top-right {
+    top: 20%;
+    right: 8%;
+    text-align: right;
+}
+
+/* Bottom Right */
+.orbit-text.bottom-right {
+    bottom: 20%;
+    right: 8%;
+    text-align: right;
+}
+
+/* Center Logo & Subtitle */
+.center-logo-container {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+    width: 25%;
+    /* Reduced from 40% to 25% to fit inside circle */
+    z-index: 20;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-logo {
+    width: 100%;
+    height: auto;
+    /* Removed max-width to allow full scaling with container */
+    /* max-width: 300px; */
+    margin-bottom: 0;
+}
+
+/* Subtitle styles removed */
